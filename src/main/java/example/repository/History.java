@@ -6,6 +6,9 @@ public class History {
     private final Stack<Integer> numbers = new Stack<>();
 
     public int undo() {
+        if(numbers.size() == 1){
+            return numbers.peek();
+        }
         numbers.pop();
         return numbers.peek();
     }
