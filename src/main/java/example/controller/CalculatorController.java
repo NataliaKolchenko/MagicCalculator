@@ -1,7 +1,7 @@
 package example.controller;
 
 import example.command.*;
-import example.command.Double;
+import example.command.DoubleNumber;
 import example.repository.History;
 import example.utils.Printer;
 
@@ -9,9 +9,21 @@ import java.util.EmptyStackException;
 import java.util.Scanner;
 
 public class CalculatorController {
-    private final Printer printer = new Printer();
-    private final Scanner scanner = new Scanner(System.in);
-    private final History stackNumbers = new History();
+    private final Printer printer;
+    private final Scanner scanner;
+    private final History stackNumbers;
+
+    public CalculatorController() {
+        this.printer = new Printer();
+        this.scanner = new Scanner(System.in);
+        this.stackNumbers = new History();
+    }
+
+    public CalculatorController(Printer printer, Scanner scanner, History stackNumbers) {
+        this.printer = printer;
+        this.scanner = scanner;
+        this.stackNumbers = stackNumbers;
+    }
 
     public void getStartNumber() {
         int startNumber;
@@ -49,7 +61,7 @@ public class CalculatorController {
                 break;
 
             case "double":
-                Double dNum = new Double();
+                DoubleNumber dNum = new DoubleNumber();
                 result = dNum.doubleNumber(result);
                 stackNumbers.saveValue(result);
                 printer.print(result);

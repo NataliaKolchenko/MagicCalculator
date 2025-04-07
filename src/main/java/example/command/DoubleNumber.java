@@ -1,6 +1,6 @@
 package example.command;
 
-public class Double {
+public class DoubleNumber {
 
     public int doubleNumber(int lastNumber) {
         return lastNumber * 2;
