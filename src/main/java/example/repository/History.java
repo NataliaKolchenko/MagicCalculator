@@ -4,22 +4,10 @@ import java.util.Stack;
 
 public class History {
     private final Stack<Integer> numbers = new Stack<>();
-    private final Stack<String> commands = new Stack<>();
 
-    public void save(int valueBeforeCommand, String commandName) {
-        if (!commandName.equals("undo")) {
-            numbers.push(valueBeforeCommand);
-            commands.push(commandName);
-        }
-    }
-
-    public boolean undo() {
-        if (!commands.isEmpty()) {
-            String lastCommand = commands.pop();
-            numbers.pop();
-            return !lastCommand.equals("undo");
-        }
-        return false;
+    public int undo() {
+        numbers.pop();
+        return numbers.peek();
     }
 
     public int getCurrentValue() {
@@ -30,7 +18,7 @@ public class History {
         }
     }
 
-    public Stack<Integer> getNumbers() {
-        return numbers;
+    public void saveValue(int value) {
+        numbers.push(value);
     }
 }

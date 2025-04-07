@@ -1,8 +1,6 @@
 package example.utils;
 
 public class Printer {
-    public Printer() {
-    }
 
     public void print(int number){
         System.out.println(number);

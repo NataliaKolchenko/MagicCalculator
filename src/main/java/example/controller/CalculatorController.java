@@ -5,6 +5,7 @@ import example.command.Double;
 import example.repository.History;
 import example.utils.Printer;
 
+import java.util.EmptyStackException;
 import java.util.Scanner;
 
 public class CalculatorController {
@@ -13,7 +14,7 @@ public class CalculatorController {
     private final History stackNumbers = new History();
 
     public void getStartNumber() {
-        int startNumber = 0;
+        int startNumber;
         boolean validInput = false;
 
         while (!validInput) {
@@ -21,7 +22,7 @@ public class CalculatorController {
             String input = scanner.nextLine();
             try {
                 startNumber = Integer.parseInt(input.trim());
-                stackNumbers.getNumbers().push(startNumber);
+                stackNumbers.saveValue(startNumber);
                 validInput = true;
             } catch (NumberFormatException e) {
                 printer.print("Invalid input! Please enter a valid number.");
@@ -30,27 +31,27 @@ public class CalculatorController {
 
     }
 
-    public boolean processCommand(String command){
+    public boolean processCommand(String command) {
         int result = stackNumbers.getCurrentValue();
         switch (command) {
             case "increment":
                 Increment inc = new Increment();
                 result = inc.increment(result);
-                stackNumbers.save(result, "increment");
+                stackNumbers.saveValue(result);
                 printer.print(result);
                 break;
 
             case "decrement":
                 Decrement dec = new Decrement();
                 result = dec.decrement(result);
-                stackNumbers.save(result, "decrement");
+                stackNumbers.saveValue(result);
                 printer.print(result);
                 break;
 
             case "double":
                 Double dNum = new Double();
                 result = dNum.doubleNumber(result);
-                stackNumbers.save(result, "double");
+                stackNumbers.saveValue(result);
                 printer.print(result);
                 break;
 
@@ -58,17 +59,16 @@ public class CalculatorController {
             case "randadd":
                 RandomNumber rand = new RandomNumber();
                 result = rand.randadd(result);
-                stackNumbers.save(result, "randadd");
+                stackNumbers.saveValue(result);
                 printer.print(result);
                 break;
 
             case "undo":
                 Undo undo = new Undo();
-                if (!undo.undo(stackNumbers)){
+                try {
+                    printer.print(undo.undo(stackNumbers));
+                } catch (EmptyStackException e) {
                     printer.print("No actions to undo.");
-                } else {
-                    result = stackNumbers.getCurrentValue();
-                    printer.print(result);
                 }
                 break;
 
