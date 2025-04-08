@@ -19,6 +19,8 @@ For example, with an inital result value of 1, the command sequence
 Implement each command as its own class.
 
 Addition
+
 Command to launch program:
+
 javac -d out $(find src/main/java/example -name "*.java") && java -cp out example.Main
 
